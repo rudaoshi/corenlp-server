@@ -3,6 +3,8 @@ package so.knowledge.corenlp.server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -56,7 +58,10 @@ public class Server extends StanfordCoreNLP {
             final String incoming = ((Process) message).getText();
             final Annotation document = annotate(pipeline, incoming);
             final ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-            pipeline.xmlPrint(document, ostream);
+            BufferedWriter bufferedWriter = new BufferedWriter(
+                    new OutputStreamWriter(ostream));
+            pipeline.jsonPrint(document, bufferedWriter);
+            bufferedWriter.close();
             connection.reply(ostream.toByteArray());
         } else {
             // unreachable if we had a proper language with ADTs
