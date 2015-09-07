@@ -39,7 +39,7 @@ Client want to stop the server. The server reply 'stopping' and will stop servic
 ### ping
 Client ping the server to test if alive. The server gives a 'pong'.
 
-### process <text>
+### process {text}
 Process the text and return the result in xml format. 
 
 
